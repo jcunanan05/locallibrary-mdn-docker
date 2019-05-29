@@ -13,7 +13,7 @@ var app = express();
 // connect to the database
 database.init({
   host: "mongodb",
-  database: "mydatabase"
+  database: "locallibrary"
 });
 
 // view engine setup
