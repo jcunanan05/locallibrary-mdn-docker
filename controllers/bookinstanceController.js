@@ -1,32 +1,41 @@
-var mongoose = require("mongoose");
-var moment = require("moment");
+var BookInstance = require("../models/bookinstance");
 
-var Schema = mongoose.Schema;
+// Display list of all BookInstances.
+exports.bookinstance_list = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance list");
+};
 
-var BookInstanceSchema = new Schema({
-  book: { type: Schema.ObjectId, ref: "Book", required: true }, // Reference to the associated book.
-  imprint: { type: String, required: true },
-  status: {
-    type: String,
-    required: true,
-    enum: ["Available", "Maintenance", "Loaned", "Reserved"],
-    default: "Maintenance"
-  },
-  due_back: { type: Date, default: Date.now }
-});
+// Display detail page for a specific BookInstance.
+exports.bookinstance_detail = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance detail: " + req.params.id);
+};
 
-// Virtual for this bookinstance object's URL.
-BookInstanceSchema.virtual("url").get(function() {
-  return "/catalog/bookinstance/" + this._id;
-});
+// Display BookInstance create form on GET.
+exports.bookinstance_create_get = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance create GET");
+};
 
-BookInstanceSchema.virtual("due_back_formatted").get(function() {
-  return moment(this.due_back).format("MMMM Do, YYYY");
-});
+// Handle BookInstance create on POST.
+exports.bookinstance_create_post = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance create POST");
+};
 
-BookInstanceSchema.virtual("due_back_yyyy_mm_dd").get(function() {
-  return moment(this.due_back).format("YYYY-MM-DD");
-});
+// Display BookInstance delete form on GET.
+exports.bookinstance_delete_get = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance delete GET");
+};
 
-// Export model.
-module.exports = mongoose.model("BookInstance", BookInstanceSchema);
+// Handle BookInstance delete on POST.
+exports.bookinstance_delete_post = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance delete POST");
+};
+
+// Display BookInstance update form on GET.
+exports.bookinstance_update_get = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance update GET");
+};
+
+// Handle bookinstance update on POST.
+exports.bookinstance_update_post = function(req, res) {
+  res.send("NOT IMPLEMENTED: BookInstance update POST");
+};
