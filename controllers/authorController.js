@@ -1,4 +1,6 @@
 const Author = require("../models/author");
+const Book = require("../models/book");
+const async = require("async");
 
 // Display list of all Authors.
 exports.author_list = function(req, res, next) {
@@ -15,8 +17,52 @@ exports.author_list = function(req, res, next) {
 };
 
 // Display detail page for a specific Author.
-exports.author_detail = function(req, res) {
-  res.send("NOT IMPLEMENTED: Author detail: " + req.params.id);
+exports.author_detail = async function(req, res) {
+  // async.parallel(
+  //   {
+  //     author: function(callback) {
+  //       Author.findById(req.params.id).exec(callback);
+  //     },
+  //     author_books: function(callback) {
+  //       Book.find({ author: req.params.id }, "title summary").exec(callback);
+  //     }
+  //   },
+  //   function(err, results) {
+  //     res.render("author_detail", {
+  //       title: "Author Detail",
+  //       author: results.author,
+  //       author_books: results.author_books
+  //     });
+  //   }
+  // );
+
+  // try {
+  //   const author = await Author.findById(req.params.id);
+  //   const author_books = await Book.find(
+  //     { author: req.params.id },
+  //     "title summary"
+  //   );
+
+  //   res.render("author_detail", {
+  //     title: "Author Detail",
+  //     author,
+  //     author_books
+  //   });
+  // } catch (error) {
+  //   return next(error);
+  // }
+
+  Promise.all([
+    await Author.findById(req.params.id),
+    await Book.find({ author: req.params.id }, "title summary")
+  ])
+    .then(([author, author_books]) => {
+      res.render("author_detail", {
+        author,
+        author_books
+      });
+    })
+    .catch(err => next(err));
 };
 
 // Display Author create form on GET.
